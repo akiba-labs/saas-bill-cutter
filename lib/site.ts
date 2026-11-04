@@ -34,6 +34,7 @@ export const SIBLING_TOOLS = [
   { href: "https://japan-pet-quarantine.vercel.app", label: "Japan Pet Quarantine Check" },
   { href: "https://japan-leaving-tax.vercel.app", label: "Japan Leaving Tax Check" },
   { href: "https://japan-disaster-prep.vercel.app", label: "Japan Disaster Prep Check" },
+  { href: "https://japan-lost-item.vercel.app", label: "Japan Lost Item Check" },
   { href: "https://ads-risk-check.vercel.app", label: "Ads Risk Check" },
   { href: "https://faceless-yt-risk-check.vercel.app", label: "Faceless YT Reality Check" },
   { href: "https://appgate-pack.vercel.app/check", label: "AppGate Pack" },
