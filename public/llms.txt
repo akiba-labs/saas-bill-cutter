@@ -65,6 +65,7 @@ Educational estimate only. Not financial, legal, or licensing advice. Self-hosti
 - Japan Lost Item Check (lost something in Japan: who to contact, 遺失物法 hold periods, 14-day residence card reissue; keyless API): https://japan-lost-item.vercel.app
 - Japan High-Cost Medical Expense Check (Japan 高額療養費 monthly/annual medical cost caps; keyless API): https://japan-medical-cost-cap.vercel.app
 - Japan Job Loss Check (what to file after leaving a job in Japan: visa notice, unemployment insurance, health, pension; keyless API): https://japan-job-loss.vercel.app
+- Japan Visa Renewal Window Check (when to renew a period of stay or residence card in Japan: window, special period, fees; keyless API): https://japan-visa-renewal.vercel.app
 - Hotel OTA Commission Calculator: https://hotel-ota-calculator.vercel.app
 - Ads Risk Check: https://ads-risk-check.vercel.app
 - Faceless YT Reality Check: https://faceless-yt-risk-check.vercel.app
