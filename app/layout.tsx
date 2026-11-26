@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { DisclaimerBanner } from "@/components/disclaimer-banner";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { isGithubPages, pagesSiteUrl } from "@/lib/hosting";
 import { HONESTY, SITE_NAME, SITE_TAGLINE, getSiteUrl } from "@/lib/site";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
@@ -24,7 +25,7 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getSiteUrl()),
+  metadataBase: new URL(isGithubPages ? pagesSiteUrl("https://saas-bill-cutter.vercel.app") : getSiteUrl()),
   title: {
     default: `${SITE_NAME} — ${SITE_TAGLINE}`,
     template: `%s · ${SITE_NAME}`,

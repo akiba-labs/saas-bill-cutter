@@ -5,6 +5,7 @@ import { calculate, SETUP_HOURS } from "@/lib/calc";
 import { TOOLS } from "@/lib/tools";
 import { CardDisclaimer } from "@/components/card-disclaimer";
 import { ShareBar } from "@/components/share-bar";
+import { isGithubPages, pagesSiteUrl } from "@/lib/hosting";
 import { PUBLIC_URL, resultPath } from "@/lib/share";
 
 const money = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
@@ -29,7 +30,7 @@ export function Calculator({ initial }: { initial?: CalculatorInitial }) {
     [spend, hosting, rate],
   );
   const result = useMemo(() => calculate(inputs), [inputs]);
-  const shareUrl = `${PUBLIC_URL}${resultPath(inputs)}`;
+  const shareUrl = isGithubPages ? `${pagesSiteUrl(PUBLIC_URL)}/` : `${PUBLIC_URL}${resultPath(inputs)}`;
 
   const input =
     "w-28 rounded-xl border border-line bg-black/40 px-3 py-2 text-right font-mono text-sm text-foreground focus:border-amber";
@@ -175,17 +176,20 @@ export function Calculator({ initial }: { initial?: CalculatorInitial }) {
               </ul>
               <div className="mt-6 border-t border-line pt-4" data-testid="share-result">
                 <p className="text-xs text-muted">
-                  Share this result. The link carries your numbers, so anyone who opens it sees the same math.
-                  Nothing is stored.
+                  {isGithubPages
+                    ? "Share the calculator. A link to this exact result returns when hosting is back."
+                    : "Share this result. The link carries your numbers, so anyone who opens it sees the same math. Nothing is stored."}
                 </p>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <ShareBar
                     url={shareUrl}
                     text={`${result.verdict}: ${result.headline}. Open-source swaps for my SaaS bill:`}
                   />
-                  <a href={resultPath(inputs)} className="text-sm text-muted underline underline-offset-2 hover:text-foreground">
-                    Open result page
-                  </a>
+                  {isGithubPages ? null : (
+                    <a href={resultPath(inputs)} className="text-sm text-muted underline underline-offset-2 hover:text-foreground">
+                      Open result page
+                    </a>
+                  )}
                 </div>
               </div>
             </>

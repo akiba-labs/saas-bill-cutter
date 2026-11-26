@@ -2,8 +2,11 @@ import type { Metadata } from "next";
 import { Calculator } from "@/components/calculator";
 import { FaqSection, type FaqItem } from "@/components/faq-section";
 import { SponsorSlot } from "@/components/sponsor-slot";
+import { API_PAUSED_NOTE, isGithubPages, pagesSiteUrl } from "@/lib/hosting";
 import { EXAMPLE_INPUTS, PUBLIC_URL, resultPath } from "@/lib/share";
 import { TOOLS } from "@/lib/tools";
+
+const siteUrl = isGithubPages ? pagesSiteUrl(PUBLIC_URL) : PUBLIC_URL;
 
 const title = "Free SaaS cost cutter: open-source alternatives to Mixpanel, Calendly, Intercom and more";
 const description =
@@ -12,12 +15,12 @@ const description =
 export const metadata: Metadata = {
   title: { absolute: title },
   description,
-  alternates: { canonical: `${PUBLIC_URL}/` },
+  alternates: { canonical: `${siteUrl}/` },
   openGraph: {
     title,
     description,
     type: "website",
-    url: `${PUBLIC_URL}/`,
+    url: `${siteUrl}/`,
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: { card: "summary_large_image", title, description, images: ["/opengraph-image"] },
@@ -27,7 +30,7 @@ const appJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   name: "SaaS Bill Cutter",
-  url: `${PUBLIC_URL}/`,
+  url: `${siteUrl}/`,
   applicationCategory: "BusinessApplication",
   operatingSystem: "Any (web browser)",
   isAccessibleForFree: true,
@@ -37,7 +40,7 @@ const appJsonLd = {
 
 const byId = Object.fromEntries(TOOLS.map((t) => [t.id, t]));
 const swapLine = (id: string) => `${byId[id].swap} (${byId[id].license})`;
-const exampleUrl = `${PUBLIC_URL}${resultPath(EXAMPLE_INPUTS)}`;
+const exampleUrl = isGithubPages ? `${siteUrl}/` : `${PUBLIC_URL}${resultPath(EXAMPLE_INPUTS)}`;
 
 const faq: FaqItem[] = [
   {
@@ -74,11 +77,15 @@ const faq: FaqItem[] = [
   },
   {
     q: "Can I share my result?",
-    a: `Yes. Once you enter a number, the result card has a Copy link button. The link carries your inputs in the URL (nothing is stored), opens the same math for anyone, and shows a preview card with the yearly savings. Example: ${exampleUrl}`,
+    a: isGithubPages
+      ? `Yes. The calculator on this page runs in your browser. A link that carries your inputs and a preview card returns when hosting is back. Example: ${exampleUrl}`
+      : `Yes. Once you enter a number, the result card has a Copy link button. The link carries your inputs in the URL (nothing is stored), opens the same math for anyone, and shows a preview card with the yearly savings. Example: ${exampleUrl}`,
   },
   {
     q: "Is there an API or MCP server for AI agents?",
-    a: `Yes, free and keyless. GET ${PUBLIC_URL}/api/calculate?mixpanel=300&calendly=48&intercom=150&hostingPerMonth=20&hourlyRate=50 returns the swaps, savings, payback, and verdict; ${PUBLIC_URL}/api/tools lists every covered tool. The OpenAPI spec is at ${PUBLIC_URL}/openapi.json, and the same calculator is a tool on the free remote MCP server at https://free-agent-tools.vercel.app/mcp.`,
+    a: isGithubPages
+      ? API_PAUSED_NOTE
+      : `Yes, free and keyless. GET ${PUBLIC_URL}/api/calculate?mixpanel=300&calendly=48&intercom=150&hostingPerMonth=20&hourlyRate=50 returns the swaps, savings, payback, and verdict; ${PUBLIC_URL}/api/tools lists every covered tool. The OpenAPI spec is at ${PUBLIC_URL}/openapi.json, and the same calculator is a tool on the free remote MCP server at https://free-agent-tools.vercel.app/mcp.`,
   },
 ];
 
